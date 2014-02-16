@@ -1,0 +1,41 @@
+{% extends "core/_base.html" %}
+
+{% block content %}
+{% call form() %}
+<div class="fieldWrapper">
+    Please input code snippet.*<br/>
+    {{ form.code.render()|safe }}
+
+    {% if form.code.errors %}
+    <div class="errors">
+        {% for error in form.code.errors %}
+        {{ error }}&nbsp;
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+<div class="fieldWrapper">
+    Message with.<br/>
+    {{ form.message.render()|safe }}
+    {% if form.message.errors %}
+    <span class="errors">
+        {% for error in form.message.errors %}
+        {{ error }}&nbsp;
+        {% endfor %}
+    </span>
+    {% endif %}
+</div>
+{{ form.default_actions(label='Tweet')|safe }}
+{% endcall %}
+
+<div id="recent">
+    <h4>Recent Tweets</h4>
+    <ul>
+        {% for tweet in tweets %}
+        <li>
+        <a href="{{ url_for('core/show', id=tweet.key().id()) }}">{{ tweet.user }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

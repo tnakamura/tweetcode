@@ -1,0 +1,28 @@
+{% extends "core/_base.html" %}
+
+{% block content %}
+<div id="message">
+    {{ message }}
+</div>
+
+<p class="help">
+    {{ tweet.user }}
+    {% if tweet.message %}
+    「{{ tweet.message }}」
+    {% endif %}
+</p>
+
+<div id="code_container">
+    <pre class="prettyprint">
+{{ tweet.code }}
+    </pre>
+</div>
+
+<p class="help">
+このコードは Tweet Code のサーバーに保存されています。
+このサービスを使いたい場合は
+<a href="{{ url_for('core/index') }}">ここをクリックして下さい。</a>
+</p>
+
+{% endblock %}
+

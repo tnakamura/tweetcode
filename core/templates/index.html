@@ -1,0 +1,44 @@
+{% extends "core/_base.html" %}
+
+{% block content %}
+<p class="help">
+    Twitter でプログラミングの話題をつぶやいていて、
+    コードスニペットをつぶやきたくなったことはありませんか？
+    Tweet Code を使えば、簡単に Twitter でコードスニペットをつぶやけます。
+</p>
+
+{% call form() %}
+<div class="fieldWrapper">
+    <span class="help">コードスニペットを入力して下さい。</span><br/>
+    {{ form.code.render(cols=58, rows=10)|safe }}
+    {% if form.code.errors %}
+    <div class="errors">
+        {% for error in form.code.errors %}
+        {{ _(error) }}&nbsp;
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<div class="fieldWrapper">
+    <span class="help">あわせてつぶやきたいメッセージがある場合は入力して下さい。(100文字まで)</span><br/>
+    {{ form.message.render(size=75)|safe }}
+    {% if form.message.errors %}
+    <span class="errors">
+        {% for error in form.message.errors %}
+        {{ _(error) }}&nbsp;
+        {% endfor %}
+    </span>
+    {% endif %}
+</div>
+
+<div class="fieldWrapper">
+    {% if request.user.is_anonymous() %}
+    {{ form.default_actions(label='ログインしてツイート！')|safe }}
+    {% else %}
+    {{ form.default_actions(label='ツイート！')|safe }}
+    {% endif %}
+</div>
+
+{% endcall %}
+{% endblock %}
